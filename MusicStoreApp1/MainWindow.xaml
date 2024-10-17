@@ -1,0 +1,91 @@
+﻿<Window x:Class="MusicStoreApp1.MainWindow"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:MusicStoreApp1.ViewModels"
+        mc:Ignorable="d"
+        Title="Музичний магазин" Height="600" Width="1500"
+        Icon="Resources/icon.png">
+    <Window.Resources>
+        <MatrixTransform x:Key="ImageBrushRelativeTransform1"/>
+        <Style TargetType="{x:Type GridViewColumnHeader}">
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <!-- Выравнивание по центру -->
+            <Setter Property="Padding" Value="13,2,1,2"/>
+            <!-- Задает внутренние отступы заголовков -->
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+    </Window.Resources>
+
+
+    <!-- Сітка з трьома рядками: для пошуку, списку платівок та кнопок -->
+    <Grid>
+        <!--<Grid.Background>
+            <ImageBrush ImageSource="Resources/background.png" Stretch="UniformToFill"/>
+        </Grid.Background>-->
+        <!--<Grid>
+            -->
+        <!-- Логотип -->
+        <!--
+            <Image Source="Resources/Preview.png" Width="50" Height="50" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10"/>
+        </Grid>-->
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <!-- Пошук -->
+            <RowDefinition Height="*" />
+            <!-- Список -->
+            <RowDefinition Height="Auto" />
+            <!-- Кнопки -->
+        </Grid.RowDefinitions>        
+                <!-- Поле пошуку та кнопка для пошуку -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="0" Margin="10" >
+            <TextBox Width="200" Height="20" Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}" />
+            <Button Content="Шукати" Command="{Binding SearchCommand}" Width="100" Margin="5"/>
+        </StackPanel>
+
+        <!-- Список платівок -->
+        <ListView ItemsSource="{Binding VinylRecords}" SelectedItem="{Binding SelectedRecord}" Grid.Row="1" Margin="5" SelectionChanged="ListView_SelectionChanged" 
+                  FontSize="12" Background="#FFDCD8F3" FontWeight="Bold" BorderThickness="1,1,1,1" VerticalAlignment="Top" FontFamily="Segoe UI Black" >
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Альбом" Width="130" DisplayMemberBinding="{Binding AlbumName}" />
+                    <GridViewColumn Header="Виконавець" Width="160" DisplayMemberBinding="{Binding ArtistName}" />
+                    <GridViewColumn Header="Видавець" Width="140" DisplayMemberBinding="{Binding PublisherName}" />
+                    <GridViewColumn Header="Треків" Width="70" DisplayMemberBinding="{Binding NumberOfTracks}" />
+                    <GridViewColumn Header="Жанр" Width="110" DisplayMemberBinding="{Binding Genre}" />
+                    <GridViewColumn Header="Рік випуску" Width="100" DisplayMemberBinding="{Binding ReleaseYear}" />
+                    <GridViewColumn Header="Ціна" Width="90" DisplayMemberBinding="{Binding CostPrice}" />
+                    <GridViewColumn Header="Рознічна ціна" Width="100" DisplayMemberBinding="{Binding SalePrice}" />
+                    <GridViewColumn Header="На акції" Width="70" DisplayMemberBinding="{Binding IsOnPromotion}" />
+                    <GridViewColumn Header="Ціна відпуску" Width="110" DisplayMemberBinding="{Binding FinalPrice}" />
+                    <GridViewColumn Header="Продано" Width="90" DisplayMemberBinding="{Binding QuantitySold}" />
+                    <GridViewColumn Header="Наявність" Width="90" DisplayMemberBinding="{Binding QuantityInStock}" />                   
+                    <GridViewColumn Header="Зарезервовано"  Width="110" DisplayMemberBinding="{Binding TotalReservedQuantity}" />                    
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <!-- Кнопки управління -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Bottom" Margin="10">
+            <Button Content="Додати" Width="80" Command="{Binding AddCommand}" Margin="5"  Padding="2"/>
+            <Button Content="Редагувати" Width="80" Command="{Binding EditCommand}" 
+                    IsEnabled="{Binding SelectedRecord, Converter={StaticResource NullToBooleanConverter}}" Margin="5" Padding="2 0 2 0" />
+            <Button Content="Видалити" Width="70" Command="{Binding DeleteCommand}" 
+                    IsEnabled="{Binding SelectedRecord, Converter={StaticResource NullToBooleanConverter}}" Margin="5" Padding="2 0 2 0"/>
+            <Button Content="Продати" Width="70" Command="{Binding SellCommand}" 
+                    IsEnabled="{Binding SelectedRecord, Converter={StaticResource NullToBooleanConverter}}" Margin="5" Padding="2 0 2 0"/>
+            <Button Content="Резервувати" Width="90" Command="{Binding ReserveCommand}" 
+                IsEnabled="{Binding SelectedRecord, Converter={StaticResource NullToBooleanConverter}}" Margin="5" Padding="2 0 2 0"/>
+            <Button Content="Резервування" Command="{Binding ShowReservationsCommand}" 
+        IsEnabled="{Binding SelectedRecord, Converter={StaticResource NullToBooleanConverter}}" Width="100" Margin="5" Padding="2 0 2 0"/>
+            <Button Content="Статистика Продажів" Command="{Binding ShowSalesStatisticsCommand}" Margin="5" Padding="2 0 2 0"/>
+            <Button Content="Клієнти" Command="{Binding ShowCustomersCommand}" Margin="5"/>
+            <!--<Button Content="Застосувати промо-акції" Command="{Binding ApplyPromotionsCommand}" Margin="5" Padding="2 0 2 0"/>-->
+            <Button Content="Налаштування промо-акцій" Command="{Binding ShowPromotionSettingsCommand}" Width="200" Margin="5" Padding="2 0 2 0"/>
+
+        </StackPanel>
+    </Grid>
+</Window>

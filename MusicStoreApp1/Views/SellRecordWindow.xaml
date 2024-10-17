@@ -1,0 +1,25 @@
+﻿<Window x:Class="MusicStoreApp1.Views.SellRecordWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MusicStoreApp1.Views"
+        mc:Ignorable="d"
+        Title="Продаж платівки" Height="200" Width="300">
+
+    <!-- Основна сітка для компонування елементів -->
+    <Grid>
+        <!-- StackPanel для вертикального розміщення елементів -->
+        <StackPanel Margin="10">
+
+            <!-- Мітка для пояснення поля введення -->
+            <Label Content="Кількість для продажу" />
+
+            <!-- Поле для введення кількості платівок для продажу -->
+            <TextBox x:Name="QuantityTextBox" />
+
+            <!-- Кнопка для підтвердження продажу -->
+            <Button Content="Підтвердити продаж" Click="SellButton_Click" HorizontalAlignment="Center" />
+        </StackPanel>
+    </Grid>
+</Window>

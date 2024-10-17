@@ -1,0 +1,33 @@
+﻿<Window x:Class="MusicStoreApp1.Views.CustomerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MusicStoreApp1.Views"
+        mc:Ignorable="d"
+        Title="Додати/Редагувати клієнта" Height="300" Width="400">
+    <!-- Основна сітка для компонування елементів -->
+    <Grid>
+        <!-- StackPanel для вертикального розміщення елементів (мітки, текстові поля, кнопка) -->
+        <StackPanel Margin="10">
+            <!-- Поле для введення імені -->
+            <Label Content="Ім'я" />
+            <TextBox Text="{Binding FirstName}" />
+
+            <!-- Поле для введення прізвища -->
+            <Label Content="Прізвище" />
+            <TextBox Text="{Binding LastName}" />
+
+            <!-- Поле для введення email -->
+            <Label Content="Email" />
+            <TextBox Text="{Binding Email}" />
+
+            <!-- Поле для введення номера телефону -->
+            <Label Content="Номер телефону" />
+            <TextBox Text="{Binding PhoneNumber}" />
+
+            <!-- Кнопка для збереження даних -->
+            <Button Content="Зберегти" HorizontalAlignment="Center" Click="SaveButton_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

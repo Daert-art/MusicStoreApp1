@@ -1,0 +1,29 @@
+﻿<Window x:Class="MusicStoreApp1.Views.SalesStatisticsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MusicStoreApp1.Views"
+        mc:Ignorable="d"
+        Title="Статистика Продажів" Height="300" Width="400">
+
+    <!-- Основна сітка для компонування елементів інтерфейсу -->
+    <Grid Margin="10">
+        <!-- StackPanel для вертикального розміщення елементів -->
+        <StackPanel>
+
+            <!-- Текстові блоки для відображення статистичних даних -->
+            <TextBlock Text="Загальна кількість проданих платівок:" />
+            <TextBlock Text="{Binding SalesStatistics.TotalVinylRecordsSold}" />
+
+            <TextBlock Text="Загальна сума виручки:" />
+            <TextBlock Text="{Binding SalesStatistics.TotalRevenue}" />
+
+            <TextBlock Text="Середня ціна за продаж:" />
+            <TextBlock Text="{Binding SalesStatistics.AveragePricePerSale}" />
+
+            <!-- Кнопка для оновлення статистики, прив'язана до команди -->
+            <Button Content="Оновити статистику" Command="{Binding UpdateSalesStatisticsCommand}" HorizontalAlignment="Center" Margin="10" />
+        </StackPanel>
+    </Grid>
+</Window>

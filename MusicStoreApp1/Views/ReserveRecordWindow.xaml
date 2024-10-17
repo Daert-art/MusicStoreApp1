@@ -1,0 +1,26 @@
+﻿<Window x:Class="MusicStoreApp1.Views.ReserveRecordWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MusicStoreApp1.Views"
+        mc:Ignorable="d"
+        Title="Резервування платівки" Height="200" Width="300">
+
+    <!-- Основна сітка для компонування елементів інтерфейсу -->
+    <Grid>
+        <!-- StackPanel для вертикального розміщення елементів -->
+        <StackPanel Margin="10">
+            <!-- Мітка та текстове поле для введення імені клієнта -->
+            <Label Content="Введіть ім'я клієнта" />
+            <TextBox x:Name="CustomerNameTextBox" />
+
+            <!-- Мітка та текстове поле для введення кількості платівок для резервування -->
+            <Label Content="Кількість для резервування" />
+            <TextBox x:Name="QuantityReservedTextBox" />
+
+            <!-- Кнопка для підтвердження резервування -->
+            <Button Content="Резервувати" Click="ReserveButton_Click" HorizontalAlignment="Center" />
+        </StackPanel>
+    </Grid>
+</Window>
