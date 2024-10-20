@@ -17,16 +17,27 @@
             <!-- Задает внутренние отступы заголовков -->
             <Setter Property="FontWeight" Value="Bold"/>
         </Style>
-    </Window.Resources>
 
+        <!-- Ресурс для значков галочки -->
+        <Style x:Key="PromotionIconStyle" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Text" Value=""/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsOnPromotion}" Value="True">
+                    <Setter Property="Text" Value="✔"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
 
     <!-- Сітка з трьома рядками: для пошуку, списку платівок та кнопок -->
     <Grid>
         <!--<Grid.Background>
             <ImageBrush ImageSource="Resources/background.png" Stretch="UniformToFill"/>
         </Grid.Background>-->
-        <!--<Grid>
-            -->
+        <!--<Grid>-->
         <!-- Логотип -->
         <!--
             <Image Source="Resources/Preview.png" Width="50" Height="50" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10"/>
@@ -39,16 +50,17 @@
             <!-- Список -->
             <RowDefinition Height="Auto" />
             <!-- Кнопки -->
-        </Grid.RowDefinitions>        
-                <!-- Поле пошуку та кнопка для пошуку -->
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="0" Margin="10" >
-            <TextBox Width="200" Height="20" Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}" />
+        </Grid.RowDefinitions>
+
+        <!-- Поле пошуку та кнопка для пошуку -->
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="0" Margin="10">
+            <TextBox Width="200" Height="25" Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}" />
             <Button Content="Шукати" Command="{Binding SearchCommand}" Width="100" Margin="5"/>
         </StackPanel>
 
         <!-- Список платівок -->
         <ListView ItemsSource="{Binding VinylRecords}" SelectedItem="{Binding SelectedRecord}" Grid.Row="1" Margin="5" SelectionChanged="ListView_SelectionChanged" 
-                  FontSize="12" Background="#FFDCD8F3" FontWeight="Bold" BorderThickness="1,1,1,1" VerticalAlignment="Top" FontFamily="Segoe UI Black" >
+                  FontSize="12" Background="#FFDCD8F3" FontWeight="Bold" BorderThickness="1,1,1,1" VerticalAlignment="Top" FontFamily="Segoe UI Black">
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Альбом" Width="130" DisplayMemberBinding="{Binding AlbumName}" />
@@ -59,18 +71,24 @@
                     <GridViewColumn Header="Рік випуску" Width="100" DisplayMemberBinding="{Binding ReleaseYear}" />
                     <GridViewColumn Header="Ціна" Width="90" DisplayMemberBinding="{Binding CostPrice}" />
                     <GridViewColumn Header="Рознічна ціна" Width="100" DisplayMemberBinding="{Binding SalePrice}" />
-                    <GridViewColumn Header="На акції" Width="70" DisplayMemberBinding="{Binding IsOnPromotion}" />
+                    <GridViewColumn Header="На акції" Width="70">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <TextBlock Style="{StaticResource PromotionIconStyle}" />
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
                     <GridViewColumn Header="Ціна відпуску" Width="110" DisplayMemberBinding="{Binding FinalPrice}" />
                     <GridViewColumn Header="Продано" Width="90" DisplayMemberBinding="{Binding QuantitySold}" />
-                    <GridViewColumn Header="Наявність" Width="90" DisplayMemberBinding="{Binding QuantityInStock}" />                   
-                    <GridViewColumn Header="Зарезервовано"  Width="110" DisplayMemberBinding="{Binding TotalReservedQuantity}" />                    
+                    <GridViewColumn Header="Наявність" Width="90" DisplayMemberBinding="{Binding QuantityInStock}" />
+                    <GridViewColumn Header="Зарезервовано" Width="110" DisplayMemberBinding="{Binding TotalReservedQuantity}" />
                 </GridView>
             </ListView.View>
         </ListView>
 
         <!-- Кнопки управління -->
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Grid.Row="2" VerticalAlignment="Bottom" Margin="10">
-            <Button Content="Додати" Width="80" Command="{Binding AddCommand}" Margin="5"  Padding="2"/>
+            <Button Content="Додати" Width="80" Command="{Binding AddCommand}" Margin="5" Padding="2"/>
             <Button Content="Редагувати" Width="80" Command="{Binding EditCommand}" 
                     IsEnabled="{Binding SelectedRecord, Converter={StaticResource NullToBooleanConverter}}" Margin="5" Padding="2 0 2 0" />
             <Button Content="Видалити" Width="70" Command="{Binding DeleteCommand}" 
@@ -78,14 +96,13 @@
             <Button Content="Продати" Width="70" Command="{Binding SellCommand}" 
                     IsEnabled="{Binding SelectedRecord, Converter={StaticResource NullToBooleanConverter}}" Margin="5" Padding="2 0 2 0"/>
             <Button Content="Резервувати" Width="90" Command="{Binding ReserveCommand}" 
-                IsEnabled="{Binding SelectedRecord, Converter={StaticResource NullToBooleanConverter}}" Margin="5" Padding="2 0 2 0"/>
+                    IsEnabled="{Binding SelectedRecord, Converter={StaticResource NullToBooleanConverter}}" Margin="5" Padding="2 0 2 0"/>
             <Button Content="Резервування" Command="{Binding ShowReservationsCommand}" 
-        IsEnabled="{Binding SelectedRecord, Converter={StaticResource NullToBooleanConverter}}" Width="100" Margin="5" Padding="2 0 2 0"/>
+                    IsEnabled="{Binding SelectedRecord, Converter={StaticResource NullToBooleanConverter}}" Width="100" Margin="5" Padding="2 0 2 0"/>
             <Button Content="Статистика Продажів" Command="{Binding ShowSalesStatisticsCommand}" Margin="5" Padding="2 0 2 0"/>
             <Button Content="Клієнти" Command="{Binding ShowCustomersCommand}" Margin="5"/>
             <!--<Button Content="Застосувати промо-акції" Command="{Binding ApplyPromotionsCommand}" Margin="5" Padding="2 0 2 0"/>-->
-            <Button Content="Налаштування промо-акцій" Command="{Binding ShowPromotionSettingsCommand}" Width="200" Margin="5" Padding="2 0 2 0"/>
-
+            <!--<Button Content="Налаштування промо-акцій" Command="{Binding ShowPromotionSettingsCommand}" Width="200" Margin="5" Padding="2 0 2 0"/>-->
         </StackPanel>
     </Grid>
 </Window>

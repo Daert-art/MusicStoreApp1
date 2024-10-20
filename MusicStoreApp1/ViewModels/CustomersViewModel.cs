@@ -1,4 +1,6 @@
-﻿using MusicStoreApp1.Commands;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using MusicStoreApp1.Commands;
 using MusicStoreApp1.Data;
 using MusicStoreApp1.Models;
 using MusicStoreApp1.Views;
